@@ -1,0 +1,281 @@
+﻿@using System.Security.Claims
+@model MINTHOTEL.Models.Db.Hotel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>RegistrarHotel</title>
+    <link rel="stylesheet" href="~/css/SavehotelStyle.css" asp-append-version="true" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/JavaScript.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            @if (User.Identity!.IsAuthenticated)
+            {
+                <h5 class="display-4">
+                    @User.Claims.Where(u => u.Type == ClaimTypes.Name).Select(u => u.Value).SingleOrDefault()
+                    <span class="icon"></span> <!-- Icono de usuario -->
+                </h5>
+            }
+        </div>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Ministry_of_the_Interior_of_Nicaragua_-_Emblem.svg" alt="Logo" id="logo">
+    </header>
+    <div class="spacer"></div>
+    <div class="container-menu">
+        <div class="cont-menu">
+            <h2>MINT-HOTELS</h2>
+            <nav>
+                <nav>
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <li class="dropdown__list">
+                            <a href="#" class="dropdown__link">
+                                <span class="dropdown__span">Administracion y registro de Hoteles</span>
+                                <input type="checkbox" class="dropdown__check">
+                            </a>
+
+                            <div class="dropdown__content">
+
+                                <ul class="dropdown__sub">
+
+                                    <li class="dropdown__li">
+                                        <a class="nav-link" asp-controller="CrearUsuarios" asp-action="Usuarioadmin"> <ion-icon name="person-circle-outline"></ion-icon> Crear Usuario</a>
+                                    </li>
+
+                                    <li class="dropdown__li">
+                                        <a class="nav-link" asp-controller="vistaHotel" asp-action="Vistahoteles"> <ion-icon name="bed-outline"></ion-icon> Registro y Hoteles</a>
+                                    </li>
+
+                                    <li class="dropdown__li">
+                                        <a class="nav-link" asp-controller="Registros" asp-action="TablasVisita"> <ion-icon name="bed"></ion-icon> Historial de Húesped</a>
+                                    </li>
+                                    <li class="dropdown__li">
+                                        <a class="nav-link" asp-controller="Registros" asp-action="registroHoteles"> <ion-icon name="business"></ion-icon> Hoteles & Propietarios</a>
+                                    </li>
+
+
+                                </ul>
+
+                            </div>
+                        </li>
+
+                        <li class="dropdown__list">
+                            <a href="#" class="dropdown__link">
+                                <span class="dropdown__span">Usuario Hotel</span>
+                                <input type="checkbox" class="dropdown__check">
+                            </a>
+
+                            <div class="dropdown__content">
+
+                                <ul class="dropdown__sub">
+
+                                    <li class="dropdown__li">
+                                        <a class="nav-link" asp-controller="SaveVisita" asp-action="SaveVisitas"> <ion-icon name="person"></ion-icon> Registrar Huesped</a>
+                                    </li>
+
+                                </ul>
+
+                            </div>
+                        </li>
+                        <li class="dropdown__list">
+                            <a href="#" class="dropdown__link">
+                                <span class="dropdown__span">Usuario Propietario</span>
+                                <input type="checkbox" class="dropdown__check">
+                            </a>
+
+                            <div class="dropdown__content">
+
+                                <ul class="dropdown__sub">
+
+
+                                    <li class="dropdown__li">
+                                        <a class="nav-link" asp-controller="Propietario" asp-action="UsuarioHotel"> <ion-icon name="person-add"></ion-icon> Crear Usuario Hotel</a>
+                                    </li>
+
+                                    <li class="dropdown__li">
+                                        <a class="nav-link" asp-controller="Propietario" asp-action="TablasUsuario"> <ion-icon name="settings"></ion-icon> Administrar Usuarios</a>
+                                    </li>
+                                    <li class="dropdown__li">
+                                        <a class="nav-link" asp-controller="Inicio" asp-action="Salir"> <ion-icon name="log-out-outline"></ion-icon> Cerrar Sesión</a>
+                                    </li>
+
+                                </ul>
+
+                            </div>
+                        </li>
+
+                       
+                    }
+                @if (User.IsInRole("Administrador"))
+                {
+                    <li class="dropdown__list">
+                        <a href="#" class="dropdown__link">
+                            <span class="dropdown__span">Migración y Extranjería</span>
+                            <input type="checkbox" class="dropdown__check">
+                        </a>
+                        <div class="dropdown__content">
+                            <ul class="dropdown__sub">
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="vistaHotel" asp-action="Vistahoteles"> <ion-icon name="bed-outline"></ion-icon> Registro y Hoteles</a>
+                                </li>
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="Registros" asp-action="TablasVisita"> <ion-icon name="bed"></ion-icon> Historial de Húesped</a>
+                                </li>
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="Registros" asp-action="registroHoteles"> <ion-icon name="business"></ion-icon> Hoteles & Propietarios</a>
+                                </li>
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="Inicio" asp-action="Salir"> <ion-icon name="log-out-outline"></ion-icon> Cerrar Sesión</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                }
+                @if (User.IsInRole("Usuario"))
+                {
+                    <li class="dropdown__list">
+                        <a href="#" class="dropdown__link">
+                            <span class="dropdown__span">Usuario Hotel</span>
+                            <input type="checkbox" class="dropdown__check">
+                        </a>
+                        <div class="dropdown__content">
+                            <ul class="dropdown__sub">
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="SaveVisita" asp-action="SaveVisitas">Registrar Huesped</a>
+                                </li>
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-area="" asp-controller="SaveVisita" asp-action="TablasVisita"> Húesped Activos </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                }
+                @if (User.IsInRole("Propietario"))
+                {
+                    <li class="dropdown__list">
+                        <a href="#" class="dropdown__link">
+                            <span class="dropdown__span">Usuario Propietario</span>
+                            <input type="checkbox" class="dropdown__check">
+                        </a>
+                        <div class="dropdown__content">
+                            <ul class="dropdown__sub">
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="Propietario" asp-action="UsuarioHotel">Crear Usuario Hotel</a>
+                                </li>
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="Propietario" asp-action="TablasUsuario">Administrar Usuarios</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                }
+            </nav>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="title">Datos del Hotel</div>
+        <div class="content">
+
+            <form asp-area="" asp-controller="SaveHotel" asp-action="RegistrarHotel" method="post">
+                <div class="user-details">
+                    <div class="input-box">
+                        <span class="details">Nombre de Hotel*</span>
+                        <input type="text" id="NomHotel" name="NomHotel" asp-for="NomHotel" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Tipo de Hotel*</span>
+                        <select id="Tipo" name="Tipo" asp-for="Tipo" required>
+                            <option value="">Seleccione..</option>
+                            <option value="Hotel">Hotel</option>
+                            <option value="AutoHotel">AutoHotel</option>
+                            <option value="Hostal">Hostal</option>
+                            <option value="Motel">Motel</option>
+                        </select>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Departamento*</span>
+                        <select id="Departamento" name="Departamento" asp-for="Departamento" required>
+                            <option value="">Seleccione..</option>
+                            <option value="Boaco" data-municipios="Boaco,Camoapa,San José de los Remates,San Lorenzo,Santa Lucía,Teustepe">Boaco</option>
+                            <option value="Carazo" data-municipios="Jinotepe,Diriamba,San Marcos,Santa Teresa,Dolores,La Paz de Carazo,El Rosario,La Conquista">Carazo</option>
+                            <option value="Chinandega" data-municipios="Chinandega,Corinto,El Realejo,Chichigalpa,Posoltega,El Viejo,Puerto Morazán,Somotillo,Villa Nueva,Santo Tomás del Norte,San Pedro del Norte">Chinandega</option>
+                            <option value="Chontales" data-municipios="Juigalpa,Acoyapa,San Pedro de Lovago,Villa Sandino,Santo Domingo,La Libertad,Santo Tomás,San Francisco de Cuapa,El Coral">Chontales</option>
+                            <option value="Estelí" data-municipios="Estelí,Pueblo Nuevo,Condega,San Juan de Limón,La Trinidad,San Nicolás">Estelí</option>
+                            <option value="Granada" data-municipios="Granada,Nandaime,Diriomo,Diría">Granada</option>
+                            <option value="Jinotega" data-municipios="Jinotega,San Rafael del Norte,La Concordia,San Sebastián Yalí,Santa María de Pantasma, El Cuá, San José de Bocay">Jinotega</option>
+                            <option value="León" data-municipios="León,Larreynaga-Malpaisillo,El Jicaral,La Paz Centro, Santa Rosa del Peñón, Quetzalguaque, Nagarote, El Sauce, Telica, Achuapa">León</option>
+                            <option value="Madriz" data-municipios="Somoto,San Juan de Río Coco, Las Sabanas, Palacagüina,San Lucas,Telpaneca,Yalagüina,Totogalpa,San Lucas">Madriz</option>
+                            <option value="Managua" data-municipios="Managua,Ciudad Sandino, Villa El Carmen,Villa Todo Santos,Veracruz,Tipitapa,Ticuantepe,Mateare, San Francisco Libre, San Rafael del Sur">Managua</option>
+                            <option value="Masaya" data-municipios="Masaya,Nindirí,Tisma,Catarina,Masatepe,Nandasmo,La Concepción, San Juan de Oriente">Masaya</option>
+                            <option value="Matagalpa" data-municipios="Matagalpa,Matiguás,Ciudad Darío,Esquipulas,Matagalpa,San Dionisio,San Ramón,San Isidro, Río Blanco, Tuma-La Dalia, Terrabona, Esquipulas, Muy Muy">Matagalpa</option>
+                            <option value="Nueva Segovia" data-municipios="Ocotal,Santa María, Macuelizo, Mozonte, Ciudad Antigua, San Fernando, Dipilto, Jalapa, Murra, Quilalí, El Jícaro, Wiwilí de Nueva Segovia">Nueva Segovia</option>
+                            <option value="Río San Juan" data-municipios="San Carlos,El Castillo,La Cruz del Río Grande, San Miguelito, Morrito, El Almendro, ">Río San Juan</option>
+                            <option value="Rivas" data-municipios="Rivas,San Jorge, Tola, San Juan del Sur, Altagracia, Belén, Potosí, Cárdenas, Moyogalpa">Rivas</option>
+                            <option value="Región Autónoma de la Costa Caribe Norte" data-municipios="Rosita,Puerto Cabezas,Waspam,Siuna,Prinzapolka,Waslala">Región Autónoma de la Costa Caribe Norte</option>
+                            <option value="Región Autónoma de la Costa Caribe Sur" data-municipios="Bluefields,Laguna de Perlas,Desembocadura de Río Grande,Kukra Hill,La Cruz de Río Grande,El Tortuguero">Región Autónoma de la Costa Caribe Norte</option>
+                        </select>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Municipio*</span>
+                        <select id="Municipio" name="Municipio" asp-for="Municipio" required>
+                            <option value="">Seleccione..</option>
+                            <!-- Municipios se cargarán aquí dinámicamente -->
+                        </select>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Direccion</span>
+                        <input type="text" id="Direccion" name="Direccion" asp-for="Direccion" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Codigo Ruc*</span>
+                        <input type="text" id="CodRuc" name="CodRuc" asp-for="CodRuc" required>
+                        <span asp-validation-for="CodRuc" class="text-danger"></span>
+                        @if (TempData["ErrorMessage"] != null)
+                        {
+                            <div id="error-message" class="alert alert-danger" role="alert">
+                                @TempData["ErrorMessage"]
+                            </div>
+                            <meta http-equiv="refresh" content="2;url=@Url.Action("RegistrarHotel")" />
+                        }
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Telefono</span>
+                        <input type="Telefono" id="Telefono" name="Telefono" asp-for="Telefono" required>
+                    </div>
+
+                    <div class="d-grid gap-2 mb-3">
+                        <button class="btn btn-primary custom-button" type="submit" id="submitButton">Guardar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+
+            $('#Departamento').change(function () {
+                var municipios = $('#Departamento option:selected').data('municipios');
+                var municipiosArray = municipios.split(',');
+                var municipiosSelect = $('#Municipio');
+                municipiosSelect.empty();
+                municipiosSelect.append('<option value="">Seleccione..</option>');
+                municipiosArray.forEach(function (municipio) {
+                    municipiosSelect.append('<option value="' + municipio + '">' + municipio + '</option>');
+                });
+            });
+
+
+        });
+    </script>
+</body>
+</html>

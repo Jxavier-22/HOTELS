@@ -1,0 +1,279 @@
+﻿@using System.Security.Claims
+ @model MINTHOTEL.Models.Db.Usuario;
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CrearUsuario</title>
+    <link rel="stylesheet" href="~/css/UsuarioStyle.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            @if (User.Identity!.IsAuthenticated)
+            {
+                <h5 class="display-4">
+
+                    @User.Claims.Where(u => u.Type == ClaimTypes.Name).Select(u => u.Value).SingleOrDefault()
+                    <span class="icon"></span>
+                </h5>
+            }
+        </div>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Ministry_of_the_Interior_of_Nicaragua_-_Emblem.svg" alt="Logo" id="logo">
+    </header>
+    <div class="spacer"></div>
+    <div class="container-menu">
+        <div class="cont-menu">
+            <h2>Register-HOTELS</h2>
+            <nav>
+                @if (User.IsInRole("Administrator"))
+                {
+                    <li class="dropdown__list">
+                        <a href="#" class="dropdown__link">
+                            <span class="dropdown__span">Administracion y registro de Hoteles</span>
+                            <input type="checkbox" class="dropdown__check">
+                        </a>
+
+                        <div class="dropdown__content">
+
+                            <ul class="dropdown__sub">
+
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="CrearUsuarios" asp-action="Usuarioadmin"> <ion-icon name="person-circle-outline"></ion-icon> Crear Usuario</a>
+                                </li>
+
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="vistaHotel" asp-action="Vistahoteles"> <ion-icon name="bed-outline"></ion-icon> Registro y Hoteles</a>
+                                </li>
+
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="Registros" asp-action="TablasVisita"> <ion-icon name="bed"></ion-icon> Historial de Húesped</a>
+                                </li>
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="Registros" asp-action="registroHoteles"> <ion-icon name="business"></ion-icon> Hoteles & Propietarios</a>
+                                </li>
+                                                           
+
+                            </ul>
+
+                        </div>
+                    </li>
+
+                    <li class="dropdown__list">
+                        <a href="#" class="dropdown__link">
+                            <span class="dropdown__span">Usuario Hotel</span>
+                            <input type="checkbox" class="dropdown__check">
+                        </a>
+
+                        <div class="dropdown__content">
+
+                            <ul class="dropdown__sub">
+
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="SaveVisita" asp-action="SaveVisitas"> <ion-icon name="person"></ion-icon> Registrar Huesped</a>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    </li>
+                    <li class="dropdown__list">
+                        <a href="#" class="dropdown__link">
+                            <span class="dropdown__span">Usuario Propietario</span>
+                            <input type="checkbox" class="dropdown__check">
+                        </a>
+
+                        <div class="dropdown__content">
+
+                            <ul class="dropdown__sub">
+
+
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="Propietario" asp-action="UsuarioHotel"> <ion-icon name="person-add"></ion-icon> Crear Usuario Hotel</a>
+                                </li>
+
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="Propietario" asp-action="TablasUsuario"> <ion-icon name="settings"></ion-icon> Administrar Usuarios</a>
+                                </li>
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="Inicio" asp-action="Salir"> <ion-icon name="log-out-outline"></ion-icon> Cerrar Sesión</a>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    </li>
+
+                  
+                }
+                @if (User.IsInRole("Usuario"))
+                {
+                    <li class="dropdown__list">
+                        <a href="#" class="dropdown__link">
+                            <span class="dropdown__span">Usuario Hotel</span>
+                            <input type="checkbox" class="dropdown__check">
+                        </a>
+
+                        <div class="dropdown__content">
+
+                            <ul class="dropdown__sub">
+
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="SaveVisita" asp-action="SaveVisitas">Registrar Huesped</a>
+                                </li>
+
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-area="" asp-controller="SaveVisita" asp-action="TablasVisita"> Húesped Activos </a>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    </li>
+
+                }
+                @if (User.IsInRole("Propietario"))
+                {
+
+
+                    <li class="dropdown__list">
+                        <a href="#" class="dropdown__link">
+                            <span class="dropdown__span">Usuario Propietario</span>
+                            <input type="checkbox" class="dropdown__check">
+                        </a>
+
+                        <div class="dropdown__content">
+
+                            <ul class="dropdown__sub">
+
+
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="Propietario" asp-action="UsuarioHotel">Crear Usuario Hotel</a>
+                                </li>
+
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="Propietario" asp-action="TablasUsuario">Administrar Usuarios</a>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    </li>
+                }
+            </nav>
+
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="title">Crear Usuario</div>
+        <div class="content">
+
+            <form id="crearUsuarioForm" asp-controller="CrearUsuarios" asp-action="Usuarioadmin" method="post">
+                <div class="user-details">
+                    <div class="input-box">
+                        <span class="details">* Nombre</span>
+                        <input type="text" id="Nombre" name="Nombre" asp-for="Nombre" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Apellido</span>
+                        <input type="text" id="Apellido" name="Apellido" asp-for="Apellido">
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Nombre de Usuario</span>
+                        <input type="text" id="NumUser" name="NumUser" asp-for="NumUser" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Contraseña</span>
+                        <input type="password" id="Contraseña" name="Contraseña" asp-for="Contraseña">
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Confirmar Contraseña</span>
+                        <input type="password" id="ConfirmContraseña" name="ConfirmContraseña" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Rol</span>
+                        <select id="IdRol" name="IdRol" asp-for="IdRol" required>
+                            <option value="">Seleccione..</option>
+                            <option value="1">Admin</option>
+                            <option value="2">Propietario</option>
+
+                        </select>
+                    </div>
+                </div>
+
+               
+
+                <div class="d-grid gap-2 mb-3">
+                    <button class="btn btn-primary custom-button" type="submit" id="submitButton">Guardar <ion-icon name="save-outline"></ion-icon></button></button>
+                    <input type="hidden" id="idHotel" name="idHotel" value="@ViewBag.IdHotel" />
+                </div>
+
+               
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div id="mensajeError" class="alert alert-danger" style="display: none;"></div>
+            </form>
+        </div>
+    </div>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#crearUsuarioForm').on('submit', function (e) {
+                e.preventDefault();
+
+                var form = $(this);
+                var url = form.attr('action');
+                var submitButton = $('#submitButton');
+                submitButton.prop('disabled', true); // Deshabilitar el botón
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: form.serialize(),
+                    success: function (response) {
+                        var mensajeError = $('#mensajeError');
+
+                        if (response.success) {
+                            mensajeError.removeClass('alert-danger').addClass('alert-success');
+                            mensajeError.text(response.message);
+                            $('#crearUsuarioForm')[0].reset(); // Limpiar el formulario
+                        } else {
+                            mensajeError.removeClass('alert-success').addClass('alert-danger');
+                            mensajeError.text(response.message + (response.errors ? ": " + response.errors.join(", ") : ""));
+                        }
+
+                        mensajeError.show();
+                        setTimeout(function () {
+                            mensajeError.hide();
+                        }, 5000);
+
+                        submitButton.prop('disabled', false); // Volver a habilitar el botón
+                    },
+                    error: function () {
+                        var mensajeError = $('#mensajeError');
+                        mensajeError.removeClass('alert-success').addClass('alert-danger');
+                        mensajeError.text('Error al enviar la solicitud.');
+                        mensajeError.show();
+                        setTimeout(function () {
+                            mensajeError.hide();
+                        }, 5000);
+
+                        submitButton.prop('disabled', false); // Volver a habilitar el botón
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

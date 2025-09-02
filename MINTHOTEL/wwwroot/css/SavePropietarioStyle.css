@@ -1,0 +1,291 @@
+﻿
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background: url('https://pbs.twimg.com/media/EdVL9NFXkAEEfsW.jpg')no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+header {
+    background-color: rgba(6, 1, 54, 0.8); /* Fondo del header con transparencia */
+    color: #fff; /* Color del texto del header */
+    padding: 5px;
+    text-align: center;
+    position: fixed; /* Fija el header en la parte superior de la pantalla */
+    width: 100%;
+    top: 0; /* Coloca el header en la parte superior */
+    z-index: 999; /* Asegura que el header esté encima de otros elementos */
+}
+
+/* Estilo para el icono */
+.header-container {
+    position: absolute; /* Establece la posición absoluta */
+    top: 50%; /* Alinea el contenedor en el centro verticalmente */
+    right: 0; /* Alinea el contenedor al extremo derecho */
+    transform: translateY(-50%); /* Centra verticalmente el contenedor */
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background-image: url('https://cdn-icons-png.flaticon.com/128/727/727399.png'); /* Ruta a la imagen del icono de usuario */
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.username {
+    margin-right: 10px; /* Ajusta el espacio entre el nombre de usuario y el icono */
+}
+
+#logo {
+    max-width: 50px; /* ajusta el tamaño máximo del logo */
+    margin-right: 10px; /* añade espacio entre el logo y el título */
+    float: left; /* Ubica el logo a la izquierda */
+}
+
+.container-menu {
+    width: 250px;
+    height: 100%;
+    background: rgba(55, 80, 129, 0.8); /* Fondo del menú con transparencia */
+    position: fixed;
+    top: 70px;
+    left: 0;
+    overflow-x: hidden;
+    padding-top: 10px;
+}
+
+.cont-menu {
+    padding: 20px;
+}
+
+h2 {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+nav {
+    margin-top: 20px;
+}
+
+.nav-link {
+    display: block;
+    padding: 10px;
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+    .nav-link:hover {
+        background-color: rgba(85, 85, 85, 0.8); /* Fondo del enlace al pasar el cursor con transparencia */
+    }
+
+.dropdown__list {
+    list-style: none;
+}
+
+.dropdown__link {
+    color: rgb(253, 253, 253);
+    padding: 1em .7em;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    position: relative;
+    background-color: var(--bg, transparent);
+    border-radius: 6px;
+}
+
+.dropdown__list:has(:checked) {
+    --rows: 1fr;
+    --rotate: rotate(180deg);
+    --bg: rgba(232, 236, 243, 0.8); /* Fondo desplegable con transparencia */
+}
+
+.dropdown__check {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.dropdown__arrow {
+    margin-left: auto;
+    transform: var(--rotate, 0);
+    transition: .2s transform;
+}
+
+.dropdown__content {
+    display: grid;
+    grid-template-rows: var(--rows, 0fr);
+    transition: .3s grid-template-rows;
+}
+
+/*.dropdown__sub {
+    overflow: hidden;
+}*/
+
+.dropdown__li {
+    width: 85%;
+    list-style: none;
+    margin-left: auto;
+}
+
+.dropdown__anchor {
+    padding: 1em 0;
+    display: block;
+    color: #B6BABE;
+    text-decoration: none;
+}
+
+.container {
+    position: relative;
+    margin: 100px;
+    margin-left: 300px;
+    margin-right: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.2); /* Borde con transparencia */
+    width: 1200px;
+    height: 680px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.95); /* Fondo del contenedor con transparencia */
+    padding: 25px 30px;
+    border-radius: 5px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+    margin-top: 180px;
+    /* Deja un espacio debajo del header */
+}
+
+    .container .title {
+        font-size: 25px;
+        font-weight: 500;
+        position: relative;
+    }
+
+        .container .title::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 3px;
+            width: 30px;
+            border-radius: 5px;
+            background: linear-gradient(135deg, #71b7e6, #9b59b6);
+        }
+
+.content form .user-details {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 20px 0 12px 0;
+}
+
+form .user-details .input-box {
+    margin-bottom: 15px;
+    width: calc(100% / 2 - 20px);
+}
+
+form .input-box span.details {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.user-details .input-box input {
+    height: 45px;
+    width: 100%;
+    outline: none;
+    font-size: 16px;
+    border-radius: 5px;
+    padding-left: 15px;
+    border: 1px solid #ccc;
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+}
+
+    .user-details .input-box input:focus,
+    .user-details .input-box {
+        border-color: #9b59b6;
+    }
+
+/* Estilo para el select */
+#Nacionalidad {
+    width: 200px; /* Ancho del select */
+    padding: 8px; /* Espaciado interno */
+    border: 1px solid #ccc; /* Borde */
+    border-radius: 4px; /* Borde redondeado */
+    font-size: 16px; /* Tamaño de fuente */
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo con transparencia */
+}
+
+    #Nacionalidad option {
+        background-color: rgba(255, 255, 255, 0.8); /* Color de fondo con transparencia */
+        color: #333; /* Color del texto */
+        font-size: 16px; /* Tamaño de fuente */
+    }
+
+#TipoIdentificion {
+    width: 200px; /* Ancho del select */
+    padding: 8px; /* Espaciado interno */
+    border: 1px solid #ccc; /* Borde */
+    border-radius: 4px; /* Borde redondeado */
+    font-size: 16px; /* Tamaño de fuente */
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo con transparencia */
+}
+
+    #TipoIdentificion option {
+        background-color: rgba(255, 255, 255, 0.8); /* Color de fondo con transparencia */
+        color: #333; /* Color del texto */
+        font-size: 16px; /* Tamaño de fuente */
+    }
+
+/* Estilo para el select */
+#Sexo {
+    width: 200px; /* Ancho del select */
+    padding: 8px; /* Espaciado interno */
+    border: 1px solid #ccc; /* Borde */
+    border-radius: 4px; /* Borde redondeado */
+    font-size: 16px; /* Tamaño de fuente */
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo con transparencia */
+}
+
+    #Sexo option {
+        background-color: rgba(255, 255, 255, 0.8); /* Color de fondo con transparencia */
+        color: #333; /* Color del texto */
+        font-size: 16px; /* Tamaño de fuente */
+    }
+
+.custom-button {
+    background-color: rgba(0, 123, 255, 0.8); /* Color de fondo con transparencia */
+    border-color: rgba(0, 123, 255, 0.8); /* Color del borde con transparencia */
+    color: #fff; /* Color del texto */
+    font-size: 16px; /* Tamaño del texto */
+    padding: 10px 20px; /* Espaciado interno */
+    border-radius: 20px; /* Bordes redondeados */
+    transition: background-color 0.3s, border-color 0.3s;
+    float: right; /* Transición para cambios suaves */
+    position: relative; /* Establece la posición relativa */
+    top: -66px;
+    font-weight: bold;
+}
+
+    .custom-button:hover {
+        background-color: rgba(0, 86, 179, 0.8); /* Color de fondo al pasar el cursor con transparencia */
+        border-color: rgba(0, 86, 179, 0.8); /* Color del borde al pasar el cursor con transparencia */
+    }

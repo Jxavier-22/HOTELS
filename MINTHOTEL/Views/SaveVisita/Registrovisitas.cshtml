@@ -1,0 +1,349 @@
+﻿@using System.Security.Claims
+@model IEnumerable<MINTHOTEL.Models.Db.Visitum>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Registrovisitas</title>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            @if (User.Identity!.IsAuthenticated)
+            {
+                <h5 class="display-4">
+
+                    @User.Claims.Where(u => u.Type == ClaimTypes.Name).Select(u => u.Value).SingleOrDefault()
+                    <span class="icon"></span> <!-- Icono de usuario -->
+                </h5>
+            }
+        </div>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Ministry_of_the_Interior_of_Nicaragua_-_Emblem.svg" alt="Logo" id="logo">
+    </header>
+    <div class="spacer"></div>
+    <div class="container-menu">
+        <div class="cont-menu">
+            <h2>MINT-HOTELS</h2>
+            <nav>
+                @if (User.IsInRole("Administrator"))
+                {
+                    <li class="dropdown__list">
+                        <a href="#" class="dropdown__link">
+                            <span class="dropdown__span">Administracion y registro de Hoteles</span>
+                            <input type="checkbox" class="dropdown__check">
+                        </a>
+
+                        <div class="dropdown__content">
+
+                            <ul class="dropdown__sub">
+
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="CrearUsuarios" asp-action="Usuarioadmin"> <ion-icon name="person-circle-outline"></ion-icon> Crear Usuario</a>
+                                </li>
+
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="vistaHotel" asp-action="Vistahoteles"> <ion-icon name="bed-outline"></ion-icon> Registro y Hoteles</a>
+                                </li>
+
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="Registros" asp-action="TablasVisita"> <ion-icon name="bed"></ion-icon> Historial de Húesped</a>
+                                </li>
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="Registros" asp-action="registroHoteles"> <ion-icon name="business"></ion-icon> Hoteles & Propietarios</a>
+                                </li>
+
+                             
+                            </ul>
+
+                        </div>
+                    </li>
+
+                    <li class="dropdown__list">
+                        <a href="#" class="dropdown__link">
+                            <span class="dropdown__span">Usuario Hotel</span>
+                            <input type="checkbox" class="dropdown__check">
+                        </a>
+
+                        <div class="dropdown__content">
+
+                            <ul class="dropdown__sub">
+
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="SaveVisita" asp-action="SaveVisitas"> <ion-icon name="person"></ion-icon> Registrar Huesped</a>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    </li>
+                    <li class="dropdown__list">
+                        <a href="#" class="dropdown__link">
+                            <span class="dropdown__span">Usuario Propietario</span>
+                            <input type="checkbox" class="dropdown__check">
+                        </a>
+
+                        <div class="dropdown__content">
+
+                            <ul class="dropdown__sub">
+
+
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="Propietario" asp-action="UsuarioHotel"> <ion-icon name="person-add"></ion-icon> Crear Usuario Hotel</a>
+                                </li>
+
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="Propietario" asp-action="TablasUsuario"> <ion-icon name="settings"></ion-icon> Administrar Usuarios</a>
+                                </li>
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="Inicio" asp-action="Salir"> <ion-icon name="log-out-outline"></ion-icon> Cerrar Sesión</a>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    </li>
+                                     
+                }
+                @if (User.IsInRole("Administrador"))
+                {
+                    <li class="dropdown__list">
+                        <a href="#" class="dropdown__link">
+                            <span class="dropdown__span">Migración y Extrangeria</span>
+                            <input type="checkbox" class="dropdown__check">
+                        </a>
+
+                        <div class="dropdown__content">
+
+                            <ul class="dropdown__sub">
+
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="vistaHotel" asp-action="Vistahoteles"> <ion-icon name="bed-outline"></ion-icon> Registro y Hoteles</a>
+                                </li>
+                                @*  <li class="dropdown__li">
+                            <a class="nav-link" asp-controller="SavePropietario" asp-action="ProRegistro">Registrar Propietario</a>
+                            </li> *@
+                                @*   <li class="dropdown__li">
+                            <a class="nav-link" asp-controller="CrearUsuarios" asp-action="CrearUsuario">Crear Usuario</a>
+                            </li> *@
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="Registros" asp-action="TablasVisita"> <ion-icon name="bed"></ion-icon> Historial de Húesped</a>
+                                </li>
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="Registros" asp-action="registroHoteles"> <ion-icon name="business"></ion-icon> Hoteles & Propietarios</a>
+                                </li>
+
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="Inicio" asp-action="Salir"> <ion-icon name="log-out-outline"></ion-icon> Cerrar Sesión</a>
+                                </li>
+
+
+
+                            </ul>
+
+                        </div>
+                    </li>
+                }
+                @if (User.IsInRole("Usuario"))
+                {
+                    <li class="dropdown__list">
+                        <a href="#" class="dropdown__link">
+                            <span class="dropdown__span">Usuario Hotel</span>
+                            <input type="checkbox" class="dropdown__check">
+                        </a>
+
+                        <div class="dropdown__content">
+
+                            <ul class="dropdown__sub">
+
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="SaveVisita" asp-action="SaveVisitas">Registrar Huesped</a>
+                                </li>
+
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-area="" asp-controller="SaveVisita" asp-action="TablasVisita"> Húesped Activos </a>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    </li>
+
+                }
+                @if (User.IsInRole("Propietario"))
+                {
+
+
+                    <li class="dropdown__list">
+                        <a href="#" class="dropdown__link">
+                            <span class="dropdown__span">Usuario Propietario</span>
+                            <input type="checkbox" class="dropdown__check">
+                        </a>
+
+                        <div class="dropdown__content">
+
+                            <ul class="dropdown__sub">
+
+
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="Propietario" asp-action="UsuarioHotel">Crear Usuario Hotel</a>
+                                </li>
+
+                                <li class="dropdown__li">
+                                    <a class="nav-link" asp-controller="Propietario" asp-action="TablasUsuario">Administrar Usuarios</a>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    </li>
+                }
+            </nav>
+
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="title">Registros de Visitatantes Activos</div>
+        <div class="search-container">
+            <form asp-controller="SaveVisita" asp-action="Registrovisitas">
+                <input type="text" name="buscar" class="form-text" placeholder="Buscar...">
+                <input type="submit" value="Buscar" class="btn btn-sm btn-dark">
+            </form>
+        </div>
+        <div class="outer-wrapper">
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                    <th>
+                            @Html.DisplayNameFor(Model => Model.IdVisita)
+                    </th>
+                    <th>
+                            @Html.DisplayNameFor(Model => Model.PrimerNombre)
+                    </th>
+                    <th>
+                            @Html.DisplayNameFor(Model => Model.SegundoNombre)
+                    </th>
+                    <th>
+                            @Html.DisplayNameFor(Model => Model.PrimerApellido)
+                    </th>
+                    <th>
+                            @Html.DisplayNameFor(Model => Model.SegundoApellido)
+                    </th>
+                    <th>
+                            @Html.DisplayNameFor(Model => Model.FechaNac)
+                    </th>
+                    <th>
+                            @Html.DisplayNameFor(Model => Model.Sexo)
+                    </th>
+                    <th>
+                            @Html.DisplayNameFor(Model => Model.Nacionalidad)
+                    </th>
+                    <th>
+                            @Html.DisplayNameFor(Model => Model.TipoIdentificion)
+                    </th>
+                    <th>
+                            @Html.DisplayNameFor(Model => Model.NumHabitacion)
+                    </th>
+                    <th>
+                            @Html.DisplayNameFor(Model => Model.FechaIngreso)
+                    </th>
+
+                    <th>
+                            @Html.DisplayNameFor(Model => Model.FechaSalida)
+                    </th>
+
+                    <th>
+                            @Html.DisplayNameFor(Model => Model.CodHotel)
+                    </th>
+                    <th>
+                        Acciones
+                    </th>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.IdVisita)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PrimerNombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SegundoNombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PrimerApellido)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SegundoApellido)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FechaNac)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Sexo)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Nacionalidad)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TipoIdentificion)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NumHabitacion)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FechaIngreso)
+                                </td>
+
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FechaSalida)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CodHotel)
+                                </td>
+                                <td><button class="marcar-salida-btn" data-id="@item.IdVisita">Marcar Salida</button></td>
+
+                            </tr>
+                        }
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $(".marcar-salida-btn").on("click", function () {
+                var idVisita = $(this).data("id");
+                var fechaSalida = new Date().toISOString(); // Obtiene la fecha actual en formato ISO
+
+                // Enviar solicitud al servidor para marcar la salida
+                $.ajax({
+                    url: "@Url.Action("TablasVisita", "Propietario")",
+                    method: "POST",
+                    data: { idVisita: idVisita, fechaSalida: fechaSalida },
+                    success: function (response) {
+                        alert("Se ha marcado la salida correctamente.");
+                        // Actualizar la página o realizar otras acciones necesarias
+                        location.reload();
+                    },
+                    error: function () {
+                        alert("Ha ocurrido un error al marcar la salida.");
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

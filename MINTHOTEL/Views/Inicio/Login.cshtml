@@ -1,0 +1,136 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Sistema Control de Ingresos y Egreso de Hoteles</title>
+    <link rel="stylesheet" href="~/css/loginStyle.css" asp-append-version="true" />
+</head>
+<body>
+    <section>
+        <div class="form-box">
+            <div class="form-value">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Ministry_of_the_Interior_of_Nicaragua_-_Emblem.svg" alt="Logo" id="logo">
+                <h2>Sistema CIEH</h2> 
+                <form asp-controller="Inicio" asp-action="Login" method="post">
+                    <div class="inputbox">
+                        <ion-icon name="person-circle-outline"></ion-icon>
+                        <input type="text" id="username" name="NomUsuario" required>
+                        <label for="username">Usuario:</label>
+                    </div>
+                    <div class="inputbox">
+                        <ion-icon name="lock-closed-outline"></ion-icon>
+                        <input type="password" id="password" name="Contraseña" required>
+                        <label for="">Contraseña:</label>
+                    </div>
+
+                    <button class="btn btn-primary" type="submit">Iniciar Sesión</button>
+
+                    @if (ViewBag.Mensaje != null)
+                    {
+                        <div id="mensajeError" class="alert alert-danger">
+                            @ViewBag.Mensaje
+                        </div>
+                    }
+
+                </form>
+
+            </div>
+        </div>
+    </section>
+    <canvas id="holographic-bg"></canvas>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var mensajeError = document.getElementById("mensajeError");
+            if (mensajeError) {
+                setTimeout(function () {
+                    mensajeError.style.display = "none";
+                }, 2000);
+            }
+        });
+
+    </script>
+
+    <script>
+        // Crear el canvas para el fondo holográfico
+        const canvas = document.getElementById('holographic-bg');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Variables para las partículas holográficas
+        let particlesArray = [];
+        const colors = ['#00ffff', '#ff00ff', '#ffffff'];
+
+        // Definir la clase Partícula
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.speedX = Math.random() * 3 - 1.5;
+                this.speedY = Math.random() * 3 - 1.5;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // Rebotar en los bordes
+                if (this.x > canvas.width || this.x < 0) {
+                    this.speedX = -this.speedX;
+                }
+                if (this.y > canvas.height || this.y < 0) {
+                    this.speedY = -this.speedY;
+                }
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // Función para inicializar las partículas
+        function init() {
+            particlesArray = [];
+            for (let i = 0; i < 100; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        // Animar las partículas
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            requestAnimationFrame(animate);
+        }
+
+        // Ajustar el canvas cuando se redimensiona la ventana
+        window.addEventListener('resize', function () {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            init();
+        });
+
+        // Iniciar la animación de las partículas holográficas
+        init();
+        animate();
+    </script>
+
+</body>
+</html>
