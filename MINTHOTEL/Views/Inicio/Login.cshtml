@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
 
@@ -15,8 +14,8 @@
     <section>
         <div class="form-box">
             <div class="form-value">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Ministry_of_the_Interior_of_Nicaragua_-_Emblem.svg" alt="Logo" id="logo">
-                <h2>Sistema RHtls</h2> .
+                <img src="~/Images/5-estrellas.png" alt="Logo" id="logo">
+                <h2>Sistema HOTELS</h2> .
 
                 <form asp-controller="Inicio" asp-action="Login" method="post">
                     <div class="inputbox">
@@ -61,6 +60,7 @@
         });
 
     </script>
+
 
     <script>
         // Crear el canvas para el fondo holográfico
@@ -131,6 +131,20 @@
         // Iniciar la animación de las partículas holográficas
         init();
         animate();
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const togglePassword = document.getElementById('togglePassword');
+            const passwordInput = document.getElementById('passwordInput');
+            if (togglePassword && passwordInput) {
+                togglePassword.addEventListener('click', function () {
+                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordInput.setAttribute('type', type);
+                    // Cambia el icono visualmente si lo deseas
+                    this.setAttribute('name', type === 'password' ? 'lock-closed-outline' : 'lock-open-outline');
+                });
+            }
+        });
     </script>
 
 </body>
