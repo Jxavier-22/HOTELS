@@ -15,7 +15,7 @@ body {
     justify-content: center;
     align-items: center;
     padding: 10px;
-    background: url('https://pbs.twimg.com/media/EdVL9NFXkAEEfsW.jpg')no-repeat;
+    background: url('/Images/hotels.jpg')no-repeat;
     background-position: center;
     background-size: cover;
 }

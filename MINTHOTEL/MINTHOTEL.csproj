@@ -22,10 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Imagen\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="wwwroot\Images\hotels.jpg" />
   </ItemGroup>
 
